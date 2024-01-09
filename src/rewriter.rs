@@ -41,6 +41,8 @@ impl Rewriter {
             let mut strands = Vec::new();
 
             for amino_acid in enzyme.iter_amino_acids() {
+                println!("Applying {:?} @ {}, copy={}", amino_acid, unit, copy_mode);
+
                 if *amino_acid == AminoAcid::Cut {
                     let cut_pairs = pairs.split_off(unit + 1);
                     strands.extend(Self::strands_from_pairs(&cut_pairs));
@@ -49,12 +51,21 @@ impl Rewriter {
                     if let Some(pair) = pairs.get_mut(unit) {
                         pair.bind = None;
                     }
+                    if unit == 0 {
+                        println!("Reached end of strand");
+                        break;
+                    }
                     unit -= 1;
 
                     if pairs.get(unit).map_or(true, |pair| pair.bind.is_none()) {
+                        println!("Reached end of strand");
                         break;
                     }
                 } else if *amino_acid == AminoAcid::Swi {
+                    if pairs.get(unit).map_or(true, |pair| pair.comp.is_none()) {
+                        println!("Tried to switch to empty base pair complement");
+                        break;
+                    }
                     for pair in &mut pairs {
                         pair.swap();
                     }
@@ -64,14 +75,16 @@ impl Rewriter {
                     if let Some(direction) = Self::amino_acid_to_direction(*amino_acid) {
                         let new_unit = Self::usize_add(unit, direction);
                         if let Some(new_unit) = new_unit {
-                            unit += new_unit;
+                            unit = new_unit;
                         } else {
+                            println!("Reached end of strand");
                             break;
                         }
 
                         if unit >= pairs.len()
                             || pairs.get(unit).map_or(true, |pair| pair.bind.is_none())
                         {
+                            println!("Reached end of strand");
                             break;
                         }
 
@@ -119,7 +132,7 @@ impl Rewriter {
                         while !end_of_strand {
                             let new_unit = Self::usize_add(unit, direction);
                             if let Some(new_unit) = new_unit {
-                                unit += new_unit;
+                                unit = new_unit;
                             } else {
                                 end_of_strand = true;
                                 break;
@@ -150,6 +163,7 @@ impl Rewriter {
                         }
 
                         if end_of_strand {
+                            println!("Reached end of strand");
                             break;
                         }
                     }

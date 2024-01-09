@@ -15,7 +15,7 @@ use crate::{
 };
 
 fn main() {
-    let strand = Strand::from_string("CAGGATAAGATGGTATACCAGAATACCGTATGCCT");
+    let strand = Strand::from_string("CATAAGTACCAGAATACCGTCCT");
     println!("{:?}", strand);
     let duplets: Vec<Duplet> = strand.iter_duplets().collect();
     println!("{:?}", duplets);
