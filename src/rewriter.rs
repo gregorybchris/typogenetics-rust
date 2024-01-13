@@ -38,10 +38,15 @@ impl Rewriter {
                 })
                 .collect();
 
+            println!("{}", Self::pairs_to_string(&pairs, unit));
+
             let mut strands = Vec::new();
 
             for amino_acid in enzyme.iter_amino_acids() {
-                println!("Applying {:?} @ {}, copy={}", amino_acid, unit, copy_mode);
+                println!(
+                    "Applying {:?} with unit = {}, copy = {}",
+                    amino_acid, unit, copy_mode
+                );
 
                 if *amino_acid == AminoAcid::Cut {
                     let cut_pairs = pairs.split_off(unit + 1);
@@ -170,7 +175,7 @@ impl Rewriter {
                 }
 
                 // Debug print for pairs
-                println!("{}", Self::pairs_to_string(&pairs));
+                println!("{}", Self::pairs_to_string(&pairs, unit));
             }
 
             strands.extend(Self::strands_from_pairs(&pairs));
@@ -246,8 +251,8 @@ impl Rewriter {
         }
     }
 
-    fn pairs_to_string(pairs: &[BasePair]) -> String {
-        let mut res = String::from("[ ");
+    fn pairs_to_string(pairs: &[BasePair], unit: usize) -> String {
+        let mut res = String::from("|");
         let comp_map: std::collections::HashMap<Base, &str> = [
             (Base::A, "∀"),
             (Base::C, "Ↄ"),
@@ -261,24 +266,33 @@ impl Rewriter {
         for pair in pairs {
             if let Some(comp) = pair.comp {
                 res.push_str(comp_map.get(&comp).unwrap());
-                res.push(' ');
             } else {
-                res.push_str("  ");
+                res.push(' ');
             }
         }
 
-        res.push_str("]\n[ ");
+        res.push_str("|\n|");
 
         for pair in pairs {
             if let Some(bind) = pair.bind {
                 res.push_str(&bind.to_string());
-                res.push(' ');
             } else {
-                res.push_str("  ");
+                res.push(' ');
             }
         }
 
-        res.push(']');
+        res.push_str("|\n ");
+
+        for pos in 0..pairs.len() {
+            if pos == unit {
+                res.push('^');
+            } else {
+                res.push(' ');
+            }
+        }
+
+        res.push_str("\n ");
+
         res
     }
 }

@@ -1,8 +1,11 @@
-use std::slice::Iter;
+use std::{
+    fmt::{Debug, Display, Formatter},
+    slice::Iter,
+};
 
 use crate::{base::Base, duplet::Duplet};
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(PartialEq, Eq, Clone)]
 pub struct Strand {
     bases: Vec<Base>,
 }
@@ -34,5 +37,25 @@ impl Strand {
                 None
             }
         })
+    }
+}
+
+impl Display for Strand {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        let mut s = String::new();
+        for base in &self.bases {
+            s.push_str(&base.to_string());
+        }
+        write!(f, "{}", s)
+    }
+}
+
+impl Debug for Strand {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        let mut s = String::new();
+        for base in &self.bases {
+            s.push_str(&base.to_string());
+        }
+        write!(f, "{}", s)
     }
 }

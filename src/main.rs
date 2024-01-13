@@ -10,20 +10,14 @@ mod rewriter;
 mod strand;
 mod translator;
 mod turn;
-use crate::{
-    duplet::Duplet, folder::Folder, rewriter::Rewriter, strand::Strand, translator::Translator,
-};
+use crate::{rewriter::Rewriter, strand::Strand, translator::Translator};
 
 fn main() {
-    let strand = Strand::from_string("CATAAGTACCAGAATACCGTCCT");
-    println!("{:?}", strand);
-    let duplets: Vec<Duplet> = strand.iter_duplets().collect();
-    println!("{:?}", duplets);
+    let strand = Strand::from_string("TACATTATCAGGGGGTATAGGTATACCCGGTGGTAACATATCCT");
+    println!("{}", strand);
     let enzymes = Translator::translate(&strand);
     println!("{:?}", enzymes);
     if let Some(enzyme) = enzymes.get(0) {
-        let unit = Folder::get_binding_site(enzyme, &strand);
-        println!("{:?}", unit);
         let new_strands = Rewriter::rewrite(enzyme, &strand);
         println!("{:?}", new_strands);
     }

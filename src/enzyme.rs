@@ -1,8 +1,11 @@
-use std::slice::Iter;
+use std::{
+    fmt::{Debug, Display, Formatter},
+    slice::Iter,
+};
 
 use crate::amino_acid::AminoAcid;
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(PartialEq, Eq, Clone)]
 pub struct Enzyme {
     amino_acids: Vec<AminoAcid>,
 }
@@ -21,5 +24,29 @@ impl Enzyme {
 
     pub fn iter_amino_acids(&self) -> Iter<'_, AminoAcid> {
         self.amino_acids.iter()
+    }
+}
+
+impl Display for Enzyme {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        let s = self
+            .amino_acids
+            .iter()
+            .map(|a| a.to_string())
+            .collect::<Vec<String>>()
+            .join("-");
+        write!(f, "{}", s)
+    }
+}
+
+impl Debug for Enzyme {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        let s = self
+            .amino_acids
+            .iter()
+            .map(|a| a.to_string())
+            .collect::<Vec<String>>()
+            .join("-");
+        write!(f, "{}", s)
     }
 }
