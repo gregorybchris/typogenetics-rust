@@ -8,12 +8,12 @@ pub enum Orientation {
 
 impl Orientation {
     pub fn from_turning_number(turning_number: i32) -> Orientation {
-        match turning_number % 4 {
+        match turning_number.rem_euclid(4) {
             0 => Orientation::R,
             1 => Orientation::D,
             2 => Orientation::L,
             3 => Orientation::U,
-            _ => panic!("Invalid turning number"),
+            _ => panic!("Invalid turning number: {}", turning_number),
         }
     }
 }
