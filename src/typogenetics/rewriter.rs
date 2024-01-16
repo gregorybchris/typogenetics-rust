@@ -35,12 +35,12 @@ impl Rewriter {
                 })
                 .collect();
 
-            log::info!("{}", Self::pairs_to_string(&pairs, unit));
+            log::debug!("{}", Self::pairs_to_string(&pairs, unit));
 
             let mut strands = Vec::new();
 
             for amino_acid in enzyme.iter_amino_acids() {
-                log::info!(
+                log::debug!(
                     "Applying {:?} with unit = {}, copy = {}",
                     amino_acid,
                     unit,
@@ -56,18 +56,18 @@ impl Rewriter {
                         pair.bind = None;
                     }
                     if unit == 0 {
-                        log::info!("Reached end of strand");
+                        log::debug!("Reached end of strand");
                         break;
                     }
                     unit -= 1;
 
                     if pairs.get(unit).map_or(true, |pair| pair.bind.is_none()) {
-                        log::info!("Reached end of strand");
+                        log::debug!("Reached end of strand");
                         break;
                     }
                 } else if *amino_acid == AminoAcid::Swi {
                     if pairs.get(unit).map_or(true, |pair| pair.comp.is_none()) {
-                        log::info!("Tried to switch to empty base pair complement");
+                        log::debug!("Tried to switch to empty base pair complement");
                         break;
                     }
                     for pair in &mut pairs {
@@ -81,14 +81,14 @@ impl Rewriter {
                         if let Some(new_unit) = new_unit {
                             unit = new_unit;
                         } else {
-                            log::info!("Reached end of strand");
+                            log::debug!("Reached end of strand");
                             break;
                         }
 
                         if unit >= pairs.len()
                             || pairs.get(unit).map_or(true, |pair| pair.bind.is_none())
                         {
-                            log::info!("Reached end of strand");
+                            log::debug!("Reached end of strand");
                             break;
                         }
 
@@ -167,14 +167,14 @@ impl Rewriter {
                         }
 
                         if end_of_strand {
-                            log::info!("Reached end of strand");
+                            log::debug!("Reached end of strand");
                             break;
                         }
                     }
                 }
 
                 // Debug print for pairs
-                log::info!("{}", Self::pairs_to_string(&pairs, unit));
+                log::debug!("{}", Self::pairs_to_string(&pairs, unit));
             }
 
             strands.extend(Self::strands_from_pairs(&pairs));
