@@ -1,3 +1,3 @@
-use crate::Base;
+use crate::typogenetics::Base;
 
 pub type Duplet = (Base, Base);

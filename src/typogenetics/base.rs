@@ -1,6 +1,6 @@
 use std::fmt::{Display, Formatter, Result};
 
-use crate::BaseType;
+use crate::typogenetics::BaseType;
 
 #[derive(Debug, PartialEq, Eq, Hash, Clone, Copy)]
 pub enum Base {

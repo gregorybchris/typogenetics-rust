@@ -1,4 +1,4 @@
-use crate::{AminoAcid, Base, Duplet, Enzyme, Strand};
+use crate::typogenetics::{AminoAcid, Base, Duplet, Enzyme, Strand};
 
 /// |     | A   | C   | G   | T   |
 /// | --- | --- | --- | --- | --- |

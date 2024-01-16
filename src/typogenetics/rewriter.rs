@@ -1,4 +1,4 @@
-use crate::{AminoAcid, Base, BasePair, BaseType, Enzyme, Folder, Strand};
+use crate::typogenetics::{AminoAcid, Base, BasePair, BaseType, Enzyme, Folder, Strand};
 
 #[derive(Debug, PartialEq, Eq, Clone)]
 

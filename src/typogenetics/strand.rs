@@ -3,7 +3,7 @@ use std::{
     slice::Iter,
 };
 
-use crate::{Base, Duplet};
+use crate::typogenetics::{Base, Duplet};
 
 #[derive(PartialEq, Eq, Clone)]
 pub struct Strand {

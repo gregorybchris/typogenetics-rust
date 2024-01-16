@@ -1,4 +1,4 @@
-use crate::Base;
+use crate::typogenetics::Base;
 
 pub struct BasePair {
     pub bind: Option<Base>,

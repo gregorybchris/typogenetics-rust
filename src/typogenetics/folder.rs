@@ -1,4 +1,4 @@
-use crate::{AminoAcid, Base, Enzyme, Orientation, Strand, Turn};
+use crate::typogenetics::{AminoAcid, Base, Enzyme, Orientation, Strand, Turn};
 
 /// | ins | dir |
 /// | --- | --- |
