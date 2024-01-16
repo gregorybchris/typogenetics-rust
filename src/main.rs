@@ -46,6 +46,28 @@ enum Commands {
         #[arg(long, default_value_t = false)]
         debug: bool,
     },
+
+    /// Simulate generations of enzyme application
+    Simulate {
+        /// Initial strand to start the simulation
+        init_strand_str: String,
+
+        /// Number of iterations to simulate
+        #[arg(long, default_value_t = 100_000)]
+        n_iterations: i32,
+
+        /// Random seed
+        #[arg(long)]
+        random_state: Option<i32>,
+
+        /// Whether to emit debug logs
+        #[arg(long, default_value_t = false)]
+        debug: bool,
+
+        /// Whether to print all discovered strands at the end of simulation
+        #[arg(long, default_value_t = false)]
+        print_strands: bool,
+    },
 }
 
 fn main() {
@@ -73,6 +95,16 @@ fn main() {
             for new_strand in new_strands {
                 println!("{}", new_strand);
             }
+        }
+        Some(Commands::Simulate {
+            init_strand_str: _,
+            n_iterations: _,
+            random_state,
+            debug: _,
+            print_strands: _,
+        }) => {
+            println!("{:?}", random_state)
+            // todo!("Simulate command not implemented")
         }
         None => {
             println!("Default subcommand");
