@@ -1,4 +1,5 @@
-use typogenetics::{Enzyme, Rewriter, Strand, Translator};
+use typogenetics::search::SearchAlgos;
+use typogenetics::typogenetics::{Enzyme, Rewriter, Strand, Translator};
 
 use clap::{Parser, Subcommand};
 
@@ -41,12 +42,12 @@ enum Commands {
         init_strand_str: String,
 
         /// Number of iterations to simulate
-        #[arg(long, default_value_t = 100_000)]
+        #[arg(long = "iter", default_value_t = 100_000)]
         n_iterations: i32,
 
         /// Random seed
         #[arg(long)]
-        random_state: Option<i32>,
+        seed: Option<i32>,
 
         /// Whether to emit debug logs
         #[arg(long, default_value_t = false)]
@@ -85,14 +86,15 @@ fn main() {
             }
         }
         Some(Commands::Simulate {
-            init_strand_str: _,
-            n_iterations: _,
-            random_state,
+            init_strand_str,
+            n_iterations,
+            seed: _,
             debug: _,
-            print_strands: _,
+            print_strands,
         }) => {
-            println!("{:?}", random_state)
-            // todo!("Simulate command not implemented")
+            let mut rng = rand::thread_rng();
+            let init_strand = Strand::from_string(init_strand_str);
+            SearchAlgos::random(&init_strand, *n_iterations, &mut rng, *print_strands);
         }
         None => {
             println!("Default subcommand");

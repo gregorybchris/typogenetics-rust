@@ -1,2 +1,2 @@
-mod search;
-mod typogenetics;
+pub mod search;
+pub mod typogenetics;
