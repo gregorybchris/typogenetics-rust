@@ -25,6 +25,10 @@ impl Enzyme {
     pub fn iter_amino_acids(&self) -> Iter<'_, AminoAcid> {
         self.amino_acids.iter()
     }
+
+    pub fn len(&self) -> usize {
+        self.amino_acids.len()
+    }
 }
 
 impl Display for Enzyme {

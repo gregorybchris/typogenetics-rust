@@ -38,6 +38,14 @@ impl Strand {
             }
         })
     }
+
+    pub fn clone_bases(&self) -> Vec<Base> {
+        self.bases.clone()
+    }
+
+    pub fn len(&self) -> usize {
+        self.bases.len()
+    }
 }
 
 impl Display for Strand {
