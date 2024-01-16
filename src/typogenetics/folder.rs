@@ -1,7 +1,4 @@
-use crate::{
-    amino_acid::AminoAcid, base::Base, enzyme::Enzyme, orientation::Orientation, strand::Strand,
-    turn::Turn,
-};
+use crate::{AminoAcid, Base, Enzyme, Orientation, Strand, Turn};
 
 /// | ins | dir |
 /// | --- | --- |

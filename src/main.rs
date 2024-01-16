@@ -1,16 +1,4 @@
-mod amino_acid;
-mod base;
-mod base_pair;
-mod base_type;
-mod duplet;
-mod enzyme;
-mod folder;
-mod orientation;
-mod rewriter;
-mod strand;
-mod translator;
-mod turn;
-use crate::{enzyme::Enzyme, rewriter::Rewriter, strand::Strand, translator::Translator};
+use typogenetics::{Enzyme, Rewriter, Strand, Translator};
 
 use clap::{Parser, Subcommand};
 

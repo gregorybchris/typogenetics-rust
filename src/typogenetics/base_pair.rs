@@ -1,4 +1,4 @@
-use crate::base::Base;
+use crate::Base;
 
 pub struct BasePair {
     pub bind: Option<Base>,

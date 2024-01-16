@@ -1,7 +1,4 @@
-use crate::{
-    amino_acid::AminoAcid, base::Base, base_pair::BasePair, base_type::BaseType, enzyme::Enzyme,
-    folder::Folder, strand::Strand,
-};
+use crate::{AminoAcid, Base, BasePair, BaseType, Enzyme, Folder, Strand};
 
 #[derive(Debug, PartialEq, Eq, Clone)]
 

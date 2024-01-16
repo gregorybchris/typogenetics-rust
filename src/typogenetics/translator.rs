@@ -1,4 +1,4 @@
-use crate::{amino_acid::AminoAcid, base::Base, duplet::Duplet, enzyme::Enzyme, strand::Strand};
+use crate::{AminoAcid, Base, Duplet, Enzyme, Strand};
 
 /// |     | A   | C   | G   | T   |
 /// | --- | --- | --- | --- | --- |

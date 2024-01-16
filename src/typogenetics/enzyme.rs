@@ -3,7 +3,7 @@ use std::{
     slice::Iter,
 };
 
-use crate::amino_acid::AminoAcid;
+use crate::AminoAcid;
 
 #[derive(PartialEq, Eq, Clone)]
 pub struct Enzyme {

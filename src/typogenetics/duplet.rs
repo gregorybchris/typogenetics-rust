@@ -1,3 +1,3 @@
-use crate::base::Base;
+use crate::Base;
 
 pub type Duplet = (Base, Base);
