@@ -1,5 +1,6 @@
 use crate::typogenetics::{Rewriter, Strand, Translator};
 use rand::Rng;
+use rand_chacha::ChaCha8Rng;
 use std::collections::HashSet;
 
 pub struct SearchAlgos;
@@ -8,7 +9,7 @@ impl SearchAlgos {
     pub fn random(
         init_strand: &Strand,
         n_iterations: i32,
-        rng: &mut rand::rngs::ThreadRng,
+        rng: &mut ChaCha8Rng,
         print_strands: bool,
     ) {
         let mut strands = vec![init_strand.clone()];

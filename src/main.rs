@@ -1,3 +1,4 @@
+use rand_chacha::{rand_core::SeedableRng, ChaCha8Rng};
 use typogenetics::search::SearchAlgos;
 use typogenetics::typogenetics::{Enzyme, Rewriter, Strand, Translator};
 
@@ -17,10 +18,6 @@ enum Commands {
     Translate {
         /// Strand to translate
         strand_str: String,
-
-        /// Whether to emit debug logs
-        #[arg(long, default_value_t = false)]
-        debug: bool,
     },
 
     /// Rewrite a strand using an enzyme
@@ -30,10 +27,6 @@ enum Commands {
 
         /// Strand to rewrite with enzyme
         strand_str: String,
-
-        /// Whether to emit debug logs
-        #[arg(long, default_value_t = false)]
-        debug: bool,
     },
 
     /// Simulate generations of enzyme application
@@ -49,10 +42,6 @@ enum Commands {
         #[arg(long)]
         seed: Option<i32>,
 
-        /// Whether to emit debug logs
-        #[arg(long, default_value_t = false)]
-        debug: bool,
-
         /// Whether to print all discovered strands at the end of simulation
         #[arg(long, default_value_t = false)]
         print_strands: bool,
@@ -60,13 +49,12 @@ enum Commands {
 }
 
 fn main() {
+    env_logger::init();
+
     let cli = Cli::parse();
 
     match &cli.command {
-        Some(Commands::Translate {
-            strand_str,
-            debug: _,
-        }) => {
+        Some(Commands::Translate { strand_str }) => {
             let strand = Strand::from_string(strand_str);
             let enzymes = Translator::translate(&strand);
             for enzyme in enzymes {
@@ -76,7 +64,6 @@ fn main() {
         Some(Commands::Rewrite {
             enzyme_str,
             strand_str,
-            debug: _,
         }) => {
             let enzyme = Enzyme::from_string(enzyme_str);
             let strand = Strand::from_string(strand_str);
@@ -89,10 +76,9 @@ fn main() {
             init_strand_str,
             n_iterations,
             seed: _,
-            debug: _,
             print_strands,
         }) => {
-            let mut rng = rand::thread_rng();
+            let mut rng = ChaCha8Rng::seed_from_u64(2);
             let init_strand = Strand::from_string(init_strand_str);
             SearchAlgos::random(&init_strand, *n_iterations, &mut rng, *print_strands);
         }
