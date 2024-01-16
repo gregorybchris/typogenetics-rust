@@ -97,7 +97,7 @@ fn main() {
             SearchAlgos::random(&init_strand, *n_iterations, &mut rng, *print_strands);
         }
         None => {
-            println!("Default subcommand");
+            panic!("No command provided")
         }
     }
 }
